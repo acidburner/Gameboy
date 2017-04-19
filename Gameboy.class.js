@@ -1,28 +1,60 @@
 ﻿var Gameboy = {
-    CPU: {
+    _cpu: {
         registers: {
-            a: new Int8Array(), b: new Int8Array(),
-            c: new Int8Array(), d: new Int8Array(),
-            e: new Int8Array(), h: new Int8Array(),
-            l: new Int8Array(), flags: new Int8Array(),
-            programCounter: new Uint16Array(),
-            stackPointer: new Uint16Array(),
+            af: new Uint16Array(16).fill(0),
+            bc: new Uint16Array(16).fill(0),
+            de: new Uint16Array(16).fill(0),
+            hl: new Uint16Array(16).fill(0),
+            programCounter: 0x100,
+            stackPointer: 0xFFFE,
             m:0, t:0,
         },
-        shorts: {
-            // af: this.a.toString() + this.flags.toString(),
-            // bc: this.b.toString() + this.c.toString(),
-            // de: this.d.toString() + this.e.toString(),
-            // hl: this.h.toString() + this.l.toString(),
+        //This bit is set when the result of a math operation
+        //is zero or two values match when using the CP
+        //instruction.
+        setZeroFlag: function() {
+            this.CPU.registers['af'][7] = 1;
+        },
+        //This bit is set if a subtraction was performed in the
+        //last math instruction.
+        setSubtractFlag: function() {
+            this.CPU.registers['af'][6] = 1;
+        },
+        //This bit is set if a carry occurred from the lower
+        //nibble in the last math operation
+        setHalfCarryFlag: function() {
+            this.CPU.registers['af'][5] = 1;
+        },
+        //This bit is set if a carry occurred from the last
+        //math operation or if register A is the smaller value
+        //when executing the CP instruction
+        setCarryFlag: function() {
+            this.CPU.registers['af'][4] = 1;
+        },
+        call: function() {
+
+        },
+        push: function() {
+            
+        },
+        reset: function() {
+            
+        },
+        pop: function() {
+            
+        },
+        ret: function() {
+            
+        },
+        reti: function() {
+            
         }
     },
     dumpRegisters: function() {
-        for( var key in this.CPU.registers ) {
-            //this.CPU.registers["c"] = String.fromCharCode(1);
-            console.debug( key, this.CPU.registers[key].toString() );
-        }
-        for( var key in this.CPU.shorts ) {
-            console.debug( key, this.CPU.shorts[key].toString() );
-        }
-    }
+        console.log( this.CPU.registers );
+    },
+    
 }
+
+Gameboy.setZeroFlag();
+Gameboy.dumpRegisters();
